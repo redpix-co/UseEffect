@@ -1,18 +1,24 @@
 // avoid this function recreation [CALLBACK]
 // pure funciton as memo in hooks [MEMO]
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Product from './product.js';
 import './style.css';
 
 export default function App() {
-  const [data, setData] = useState(["Item1", "Item2"]);
+  const [data, setData] = useState(['Item1', 'Item2']);
   const [count, setCount] = useState(0);
-
+  const [cb, setCb] = useState(0);
   // useEffect(() => {});
-// 
+  //
+  const cartHandler = () => {
+    setCb(cb + 1);
+  };
+
   var listItem = data.map((item, key) => {
-    return <Product name={item} key={key} />;
+    return (
+      <Product name={item} key={key} uuid={cb} cartHandler={cartHandler} />
+    );
   });
 
   const buttonHandler = () => {
@@ -28,7 +34,6 @@ export default function App() {
       {/* {data.map((item, key) => {
         return <Product name={item} key={key}/>;
        })} */}
-      
     </div>
   );
 }
